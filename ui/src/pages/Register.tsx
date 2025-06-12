@@ -14,11 +14,12 @@ import {
   Grid,
   GridItem,
   Image,
-  Divider
+  Divider,
+  Flex
 } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import LogoHeader from '../components/Header';
+import LogoHeader from '../components/Header'; // Assuming this component exists
 import { supabase } from '../supabaseClient';
 
 export default function Register() {
@@ -108,13 +109,13 @@ export default function Register() {
         bgGradient="linear(to-b, #ffe5d0 0%, #f3e8ff 100%)"
         display="flex"
         flexDir="column"
-        alignItems="center"
+        alignItems={{ base: "center", md: "flex-start" }}
         justifyContent="center"
         minH="100vh"
         px={{ base: 6, md: 12 }}
         py={8}
       >
-        <VStack spacing={6} align="flex-start" maxW="400px" w="100%">
+        <VStack spacing={6} align="flex-start" maxW={{ base: "90%", md: "400px" }} w="100%">
           <Image src="/Waves.png" alt="InventorySync Logo" maxW="120px" mb={2} />
           <Text fontSize="2xl" fontWeight="bold" color="#a259d9">
             InventorySync
@@ -149,16 +150,15 @@ export default function Register() {
         minH="100vh"
         px={6}
       >
-        <Box
+        <Flex // Use Flex for better control over alignment and stretching
           w="100%"
           maxW="480px"
           p={{ base: 4, md: 8 }}
           borderRadius="xl"
           boxShadow="lg"
           bg="white"
-          display="flex"
-          flexDirection="column"
-          justifyContent="center"
+          direction="column" // Ensure content flows vertically
+          align="stretch" // Make children stretch to the width of the Flex container
         >
           <LogoHeader />
           <Text fontSize="3xl" textAlign="center" fontWeight="bold" color="#a259d9">
@@ -222,7 +222,7 @@ export default function Register() {
               </Text>
             </VStack>
           </form>
-        </Box>
+        </Flex>
       </GridItem>
     </Grid>
   );
