@@ -1,24 +1,9 @@
 import {
-  Button,
-  FormControl,
-  FormLabel,
-  Input,
-  Text,
-  VStack,
-  HStack,
-  RadioGroup,
-  Radio,
-  SimpleGrid,
-  useToast,
-  Grid,
-  GridItem,
-  Image,
-  Divider,
-  Flex
+  Box, Button, Flex, FormControl, FormLabel, Grid, GridItem, Heading, Input,
+  Radio, RadioGroup, SimpleGrid, Stack, Text, useToast, VStack, Image, Divider
 } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import LogoHeader from '../components/Header'; // Assuming this component exists
 import { supabase } from '../supabaseClient';
 
 export default function Register() {
@@ -87,8 +72,7 @@ export default function Register() {
     } else {
       toast({
         title: 'Registration successful',
-        description:
-          'An email has been sent to your email to verify account and create password.',
+        description: 'An email has been sent to verify your account and create password.',
         status: 'success',
         duration: 7000,
         isClosable: true
@@ -98,130 +82,189 @@ export default function Register() {
 
   return (
     <Grid
-      templateColumns={{ base: "1fr", md: "1fr 1fr" }}
-      h="100vh"
+      templateColumns={{ base: "1fr", lg: "1fr 1fr" }}
+      minH="100vh"
       w="100vw"
-      overflow="hidden"
+      maxW="100%"
+      overflowX="hidden"
     >
-      {/* Left: Full-height background and features */}
+      {/* Brand Panel */}
       <GridItem
-        bgGradient="linear(to-b, #ffe5d0 0%, #f3e8ff 100%)"
-        display="flex"
-        flexDir="column"
-        alignItems={{ base: "center", md: "flex-start" }}
+        bgGradient="linear(to-b, #f8f0ff 0%, #fff1eb 100%)"
+        display={{ base: "none", lg: "flex" }}
+        flexDirection="column"
         justifyContent="center"
-        px={{ base: 6, md: 12 }}
-        py={8}
+        alignItems="center"
+        px={12}
+        py={10}
       >
-        <VStack spacing={6} align="flex-start" maxW={{ base: "90%", md: "400px" }} w="100%">
-          <Image src="/Waves.png" alt="InventorySync Logo" maxW="120px" mb={2} />
-          <Text fontSize="2xl" fontWeight="bold" color="#a259d9">
+        <VStack spacing={6} align="flex-start" maxW="500px">
+          <Image src="/Waves.png" alt="Logo" w="120px" mb={4} />
+          <Heading fontSize="3xl" fontWeight="bold" color="#a259d9">
             InventorySync
-          </Text>
-          <Text fontSize="md" color="#ff5a36" fontWeight="semibold">
+          </Heading>
+          <Text fontSize="xl" fontWeight="semibold" color="#ff5a36">
             Sync Simplified
           </Text>
-          <Divider borderColor="#ff5a36" />
-          <Text fontSize="lg" color="gray.700" fontWeight="bold">
+          
+          <Divider borderColor="orange.300" borderWidth={1} my={4} />
+          
+          <Heading fontSize="xl" color="gray.700" fontWeight="bold">
             Why InventorySync?
-          </Text>
+          </Heading>
+          
           <VStack align="flex-start" spacing={3} fontSize="md" color="gray.700">
-            <Text>• One-stop solution for Amazon, eBay, Etsy, Shopify.</Text>
-            <Text>• Prevents overselling and suspensions.</Text>
-            <Text>• Real-time inventory updates.</Text>
-            <Text>• Protects seller reputation.</Text>
-            <Text>• Secure and easy to use.</Text>
+            <Flex align="center">
+              <Box w="8px" h="8px" bg="#a259d9" borderRadius="full" mr={2} />
+              <Text>One-stop solution for Amazon, eBay, Etsy, Shopify</Text>
+            </Flex>
+            <Flex align="center">
+              <Box w="8px" h="8px" bg="#a259d9" borderRadius="full" mr={2} />
+              <Text>Prevents overselling and suspensions</Text>
+            </Flex>
+            <Flex align="center">
+              <Box w="8px" h="8px" bg="#a259d9" borderRadius="full" mr={2} />
+              <Text>Real-time inventory updates</Text>
+            </Flex>
+            <Flex align="center">
+              <Box w="8px" h="8px" bg="#a259d9" borderRadius="full" mr={2} />
+              <Text>Protects seller reputation</Text>
+            </Flex>
+            <Flex align="center">
+              <Box w="8px" h="8px" bg="#a259d9" borderRadius="full" mr={2} />
+              <Text>Secure and easy to use</Text>
+            </Flex>
           </VStack>
-          <Text fontSize="sm" mt={4} color="#a259d9" fontWeight="semibold">
+          
+          <Text fontSize="lg" mt={8} color="#a259d9" fontWeight="bold">
             Simple. Reliable. Peace of mind.
           </Text>
         </VStack>
       </GridItem>
 
-      {/* Right: Registration Form */}
+      {/* Registration Form */}
       <GridItem
         display="flex"
-        flexDirection="column"
         justifyContent="center"
         alignItems="center"
         bg="white"
-        px={6}
-        py={{ base: 8, md: 0 }}
-        overflow="auto"
+        px={{ base: 4, md: 8 }}
+        py={{ base: 8, md: 12 }}
       >
-        <Flex
+        <Box 
           w="100%"
-          maxW="480px"
+          maxW="500px"
           p={{ base: 6, md: 8 }}
           borderRadius="xl"
-          boxShadow="lg"
+          boxShadow={{ base: "none", md: "xl" }}
           bg="white"
-          direction="column"
-          align="stretch"
         >
-          <LogoHeader />
-          <Text fontSize={{ base: "2xl", md: "3xl" }} textAlign="center" fontWeight="bold" color="#a259d9">
-            Register
-          </Text>
-          <Text fontSize="md" mb={6} textAlign="center" color="gray.500">
-            Create your account to get started!
-          </Text>
-          <form onSubmit={handleSubmit} style={{ width: "100%" }}>
-            <VStack spacing={4} align="stretch">
-              <SimpleGrid columns={{ base: 1, md: 2 }} spacing={4}>
+          <VStack spacing={2} mb={8} textAlign="center">
+            <Heading fontSize="3xl" fontWeight="bold" color="#a259d9">
+              Register
+            </Heading>
+            <Text fontSize="lg" color="gray.500">
+              Create your account to get started!
+            </Text>
+          </VStack>
+          
+          <form onSubmit={handleSubmit}>
+            <VStack spacing={6}>
+              <SimpleGrid columns={{ base: 1, sm: 2 }} spacing={5}>
                 <FormControl isRequired>
-                  <FormLabel>First Name</FormLabel>
-                  <Input value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+                  <FormLabel fontWeight="semibold">First Name</FormLabel>
+                  <Input 
+                    size="lg"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                    focusBorderColor="#a259d9"
+                  />
                 </FormControl>
+                
                 <FormControl isRequired>
-                  <FormLabel>Last Name</FormLabel>
-                  <Input value={lastName} onChange={(e) => setLastName(e.target.value)} />
+                  <FormLabel fontWeight="semibold">Last Name</FormLabel>
+                  <Input 
+                    size="lg"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                    focusBorderColor="#a259d9"
+                  />
                 </FormControl>
+                
                 <FormControl isRequired>
-                  <FormLabel>Email</FormLabel>
-                  <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                  <FormLabel fontWeight="semibold">Email</FormLabel>
+                  <Input 
+                    type="email"
+                    size="lg"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    focusBorderColor="#a259d9"
+                  />
                 </FormControl>
+                
                 <FormControl>
-                  <FormLabel>Phone</FormLabel>
-                  <Input value={phone} onChange={(e) => setPhone(e.target.value)} />
+                  <FormLabel fontWeight="semibold">Phone</FormLabel>
+                  <Input 
+                    size="lg"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    focusBorderColor="#a259d9"
+                  />
                 </FormControl>
               </SimpleGrid>
+              
               <FormControl isRequired>
-                <FormLabel>Gender</FormLabel>
+                <FormLabel fontWeight="semibold">Gender</FormLabel>
                 <RadioGroup onChange={setGender} value={gender}>
-                  <HStack spacing={6}>
-                    <Radio value="male" colorScheme="orange">Male</Radio>
-                    <Radio value="female" colorScheme="purple">Female</Radio>
-                  </HStack>
+                  <Stack direction="row" spacing={8}>
+                    <Radio value="male" colorScheme="purple" size="lg">
+                      <Text fontSize="md">Male</Text>
+                    </Radio>
+                    <Radio value="female" colorScheme="purple" size="lg">
+                      <Text fontSize="md">Female</Text>
+                    </Radio>
+                  </Stack>
                 </RadioGroup>
               </FormControl>
+              
               <Button
                 type="submit"
                 bgGradient="linear(to-r, #ff5a36, #a259d9)"
                 color="white"
                 size="lg"
+                w="100%"
+                py={6}
                 isLoading={loading}
                 fontWeight="bold"
-                _hover={{ bgGradient: "linear(to-r, #a259d9, #ff5a36)" }}
+                _hover={{ 
+                  bgGradient: "linear(to-r, #e04a28, #8c4cbc)",
+                  transform: "translateY(-2px)",
+                  boxShadow: "lg"
+                }}
+                _active={{ transform: "translateY(0)" }}
+                transition="all 0.2s"
               >
-                Register
+                Create Account
               </Button>
-              <Divider />
-              <Text fontSize="sm" textAlign="center">
-                Already have an account?{' '}
-                <Button
-                  onClick={() => navigate('/')}
-                  color="#a259d9"
-                  variant="link"
-                  size="sm"
-                  fontWeight="bold"
-                >
-                  Login
-                </Button>
-              </Text>
+              
+              <Flex justify="center" w="100%" pt={4}>
+                <Text fontSize="md">
+                  Already have an account?{' '}
+                  <Button
+                    onClick={() => navigate('/')}
+                    color="#a259d9"
+                    variant="link"
+                    fontWeight="bold"
+                    size="md"
+                    _hover={{ textDecoration: "underline" }}
+                  >
+                    Sign In
+                  </Button>
+                </Text>
+              </Flex>
             </VStack>
           </form>
-        </Flex>
+        </Box>
       </GridItem>
     </Grid>
   );
