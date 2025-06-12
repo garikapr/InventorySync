@@ -1,5 +1,4 @@
 import {
-  Box,
   Button,
   FormControl,
   FormLabel,
@@ -100,7 +99,7 @@ export default function Register() {
   return (
     <Grid
       templateColumns={{ base: "1fr", md: "1fr 1fr" }}
-      minH="100vh"
+      h="100vh"
       w="100vw"
       overflow="hidden"
     >
@@ -111,7 +110,6 @@ export default function Register() {
         flexDir="column"
         alignItems={{ base: "center", md: "flex-start" }}
         justifyContent="center"
-        minH="100vh"
         px={{ base: 6, md: 12 }}
         py={8}
       >
@@ -147,21 +145,22 @@ export default function Register() {
         justifyContent="center"
         alignItems="center"
         bg="white"
-        minH="100vh"
         px={6}
+        py={{ base: 8, md: 0 }}
+        overflow="auto"
       >
-        <Flex // Use Flex for better control over alignment and stretching
+        <Flex
           w="100%"
           maxW="480px"
-          p={{ base: 4, md: 8 }}
+          p={{ base: 6, md: 8 }}
           borderRadius="xl"
           boxShadow="lg"
           bg="white"
-          direction="column" // Ensure content flows vertically
-          align="stretch" // Make children stretch to the width of the Flex container
+          direction="column"
+          align="stretch"
         >
           <LogoHeader />
-          <Text fontSize="3xl" textAlign="center" fontWeight="bold" color="#a259d9">
+          <Text fontSize={{ base: "2xl", md: "3xl" }} textAlign="center" fontWeight="bold" color="#a259d9">
             Register
           </Text>
           <Text fontSize="md" mb={6} textAlign="center" color="gray.500">
