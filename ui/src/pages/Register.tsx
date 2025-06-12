@@ -9,13 +9,13 @@ import {
   HStack,
   RadioGroup,
   Radio,
-  SimpleGrid
+  SimpleGrid,
+  useToast
 } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import LogoHeader from "../components/Header"
 import { supabase } from '../supabaseClient'
-
 
 export default function Register() {
   const [firstName, setFirstName] = useState('')
@@ -23,35 +23,60 @@ export default function Register() {
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
   const [gender, setGender] = useState('')
-  const [password, setPassword] = useState('')
+  const [loading, setLoading] = useState(false)
+  const toast = useToast()
   const navigate = useNavigate()
 
-const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault()
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setLoading(true)
   const { error } = await supabase.auth.signUp({
     email,
-    password,
+    password: Math.random().toString(36) + "!Temp1", // temporary strong password
     options: {
       data: { first_name: firstName, last_name: lastName, sex: gender, age: phone }
     }
   })
-  if (error) {
-    alert(error.message)
-  } else {
-    alert("An email has been sent to your email to verify account and create password.")
-    // Optionally redirect to login
+    setLoading(false)
+    if (error) {
+      toast({
+        title: "Registration failed",
+        description: error.message,
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      })
+    } else {
+      toast({
+        title: "Registration successful",
+        description: "An email has been sent to your email to verify account and create password.",
+        status: "success",
+        duration: 7000,
+        isClosable: true,
+      })
+      // Optionally redirect to login after a delay
+      // setTimeout(() => navigate('/'), 2000)
+    }
   }
-}
 
   return (
     <Box minH="100vh" display="flex" alignItems="center" justifyContent="center" bg="gray.100">
-    <Box p={8} bg="white" borderRadius="md" shadow="md" maxW="lg" w="full">
+      <Box
+        p={10}
+        bg="white"
+        borderRadius="lg"
+        shadow="lg"
+        maxW="800px"
+        w="100%"
+      >
         <LogoHeader />
-        <Text fontSize="2xl" mb={6} textAlign="center">Register</Text>
+        <Text fontSize="2xl" mb={6} textAlign="center" fontWeight="bold">
+          Register
+        </Text>
         <form onSubmit={handleSubmit}>
-          <VStack spacing={4}>
-            <SimpleGrid columns={{ base: 1, md: 2 }} spacing={4} w="100%">
-              <FormControl>
+          <VStack spacing={6} align="stretch">
+            <SimpleGrid columns={{ base: 1, md: 2 }} spacing={6}>
+              <FormControl isRequired>
                 <FormLabel fontWeight="bold" fontSize="lg">First Name</FormLabel>
                 <Input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
               </FormControl>
@@ -71,23 +96,27 @@ const handleSubmit = async (e: React.FormEvent) => {
             <FormControl isRequired>
               <FormLabel fontWeight="bold" fontSize="lg">Gender</FormLabel>
               <RadioGroup onChange={setGender} value={gender}>
-                <HStack spacing={6}>
+                <HStack spacing={8}>
                   <Radio value="male">Male</Radio>
                   <Radio value="female">Female</Radio>
                 </HStack>
               </RadioGroup>
             </FormControl>
-            <FormControl isRequired>
-              <FormLabel fontWeight="bold" fontSize="lg">Password</FormLabel>
-              <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-            </FormControl>
-            <Button type="submit" colorScheme="green" w="full">Register</Button>
-            <Text fontSize="sm">
+            <Button
+              type="submit"
+              colorScheme="green"
+              w="full"
+              size="lg"
+              isLoading={loading}
+            >
+              Register
+            </Button>
+            <Text fontSize="sm" textAlign="center">
               Already have an account?{" "}
               <Button
                 onClick={() => navigate('/')}
                 colorScheme="green"
-                variant="ghost"
+                variant="link"
                 size="sm"
               >
                 Login
